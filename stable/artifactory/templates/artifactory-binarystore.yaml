@@ -11,8 +11,14 @@ data:
   binarystore.xml: |-
 {{- if eq .Values.artifactory.persistence.type "file-system" }}
     <!-- File system replication -->
-    <config version="v1">
+    <config version="v2">
         <chain template="file-system"/>
+        {{- if .Values.artifactory.cacheFs.enabled }}
+        <provider id="cache-fs" type="cache-fs">
+            <cacheProviderDir>{{ .Values.artifactory.cacheFs.persistence.mountPath }}</cacheProviderDir>
+            <maxCacheSize>{{ .Values.artifactory.cacheFs.persistence.bytes }}</maxCacheSize>
+        </provider>
+        {{- end }}
     </config>
 {{- end }}
 {{- if eq .Values.artifactory.persistence.type "google-storage" }}
