@@ -451,12 +451,12 @@ spec:
       accessModes: [ "{{ .accessMode }}" ]
       resources:
         requests:
-          storage: {{ .Values.artifactory.persistence.size }}
+          storage: {{ .size }}
       {{- end }}
       {{- else }}
       - name: artifactory-volume
         emptyDir:
-          sizeLimit: {{ .Values.artifactory.persistence.size }}
+          sizeLimit: {{ .size }}
       {{- end }}
   {{- if .Values.artifactory.cacheFs.enabled }}
   - metadata:
